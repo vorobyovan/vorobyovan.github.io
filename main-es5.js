@@ -780,6 +780,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.currentV = 0;
         this.aDelta = 0;
         this.Vcoef = 0.00098 / 4;
+        this.VdopCoef = 0;
         this.bool = true; // конец
 
         this.colors = ["brown", "bisque", "blueviolet", "darkorange", "darkolivegreen", "firebrick", "red", "orange", "yellow", "green", "blue"];
@@ -805,7 +806,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         key: "lightInit",
         value: function lightInit() {
           this.light = new three__WEBPACK_IMPORTED_MODULE_2__["PointLight"](0xADA9A1, 1.7, Infinity);
-          this.light.position.set(0, 100, 0); // this.light.receiveShadow = true;
+          this.light.position.set(-50, 70, 0); // this.light.receiveShadow = true;
 
           this.light.castShadow = true;
           this.scene.add(this.light);
@@ -863,12 +864,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
           var ball = this.scene.getObjectByName("ball");
-          ball.position.x = -50 - 45 * Math.sin(this.currentAngle);
-          ball.position.y = 50 - 45 * Math.cos(this.currentAngle);
+          ball.position.x = -50 - 40 * Math.sin(this.currentAngle);
+          ball.position.y = 50 - 40 * Math.cos(this.currentAngle);
           this.currentAngle += this.aDelta;
           this.currentV += Math.sign(this.currentAngle) * Math.sqrt(Math.pow(-9.81 * 1.1, 2) + Math.pow(0.1 * 9.81 * Math.cos(this.currentAngle), 2));
           this.deltaX += Math.abs(this.aDelta);
-          ball.rotateZ(this.aDelta * 10);
+          ball.rotateZ(this.aDelta * 5);
           this.aDelta -= Math.sign(this.currentAngle) * this.Vcoef;
 
           if (Math.abs(this.currentAngle) <= this.currentMaxAngle) {
@@ -935,7 +936,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.orbitControlsInit();
           this.balls = [];
           this.ballsIDCounter = 0;
-          this.ballRadius = 5;
+          this.ballRadius = 10;
           this.controls = {
             startPosition: new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, this.ballRadius, 0),
             startAngle: 30,
@@ -966,13 +967,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           // шарик
 
           var sphereGeometry = new three__WEBPACK_IMPORTED_MODULE_2__["SphereGeometry"](this.ballRadius, 50, 50);
-          var sphereMaterial = new three__WEBPACK_IMPORTED_MODULE_2__["MeshStandardMaterial"]({
-            color: 0xFFFFFF,
+          var sphereMaterial = new three__WEBPACK_IMPORTED_MODULE_2__["MeshBasicMaterial"]({
+            color: 0xFFFC73,
             vertexColors: true
           });
           var sphere = new three__WEBPACK_IMPORTED_MODULE_2__["Mesh"](sphereGeometry, sphereMaterial);
 
-          for (var i = 0; i < sphereGeometry.faces.length; i += 3) {
+          for (var i = 0; i < sphereGeometry.faces.length; i += 10) {
             sphereGeometry.faces[i].color.setRGB(0, 0, 0);
           }
 
@@ -980,9 +981,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           sphere.position.set(-50, -50, 0);
           this.scene.add(sphere); // конец
 
-          var zhelobGeomtry = new three__WEBPACK_IMPORTED_MODULE_2__["CylinderGeometry"](50, 50, 50, 50, 50, true, Math.PI / 2, Math.PI);
-          var zhelobMaterial = new three__WEBPACK_IMPORTED_MODULE_2__["MeshStandardMaterial"]({
-            color: this.colors[6],
+          var zhelobGeomtry = new three__WEBPACK_IMPORTED_MODULE_2__["CylinderGeometry"](50, 50, 50, 500, 500, true, Math.PI / 2, Math.PI);
+          var zhelobMaterial = new three__WEBPACK_IMPORTED_MODULE_2__["MeshBasicMaterial"]({
+            color: this.colors[0],
             wireframe: true
           });
           var zhelob = new three__WEBPACK_IMPORTED_MODULE_2__["Mesh"](zhelobGeomtry, zhelobMaterial);
